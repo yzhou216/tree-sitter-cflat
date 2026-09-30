@@ -26,10 +26,9 @@ include = [
   "/LICENSES/*",
   "/README.md",
   "/REUSE.toml",
-  # The example targets declared below ship as part of the package, so their
-  # sources have to be included or `cargo package` produces a crate that
-  # cannot build.
+  # Ship the targets below, which `cargo package` would otherwise drop
   "examples/*",
+  "test/*",
 ]
 
 [lib]
@@ -57,3 +56,26 @@ test = true
 name = "parse-check"
 path = "examples/parse-check.rs"
 test = true
+
+# Under `test/` rather than Cargo's `tests/`, because the tree-sitter CLI
+# hardcodes `test/corpus` and `test/highlight` and one test directory is
+# better than two.
+[[test]]
+name = "grammar"
+path = "test/rust/grammar.rs"
+
+[[test]]
+name = "queries"
+path = "test/rust/queries.rs"
+
+[[test]]
+name = "coverage"
+path = "test/rust/coverage.rs"
+
+[[test]]
+name = "incremental"
+path = "test/rust/incremental.rs"
+
+[[test]]
+name = "stress"
+path = "test/rust/stress.rs"
