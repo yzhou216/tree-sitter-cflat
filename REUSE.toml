@@ -1,0 +1,38 @@
+version = 1
+SPDX-PackageName = "tree-sitter-cflat"
+SPDX-PackageSupplier = "Yiyu Zhou <yzhou155@dons.usfca.edu>"
+SPDX-PackageDownloadLocation = "https://github.com/yzhou216/tree-sitter-cflat"
+
+# Formats with nowhere to put a comment, plus the prose files, where a header
+# would only get in the way.
+[[annotations]]
+path = [
+  "Cargo.lock",
+  "README.md",
+  "emacs/README.md",
+  "flake.lock",
+  "package.json",
+  "tree-sitter.json",
+]
+SPDX-FileCopyrightText = "2026 Yiyu Zhou <yzhou155@dons.usfca.edu>"
+SPDX-License-Identifier = "GPL-3.0-or-later"
+
+# Corpus entries are `====` / `----` records and highlight tests are assertions
+# pinned to line numbers; a header would break both.
+[[annotations]]
+path = ["test/corpus/**.txt", "test/highlight/**.cb"]
+SPDX-FileCopyrightText = "2026 Yiyu Zhou <yzhou155@dons.usfca.edu>"
+SPDX-License-Identifier = "GPL-3.0-or-later"
+
+# Rewritten by every `tree-sitter generate`, so a header would not survive.
+[[annotations]]
+path = ["src/grammar.json", "src/node-types.json", "src/parser.c"]
+SPDX-FileCopyrightText = "2026 Yiyu Zhou <yzhou155@dons.usfca.edu>"
+SPDX-License-Identifier = "GPL-3.0-or-later"
+
+# The tree-sitter runtime headers, copied in verbatim by the CLI. Not ours to
+# relicense, and MIT is compatible with the rest of the tree.
+[[annotations]]
+path = "src/tree_sitter/**"
+SPDX-FileCopyrightText = "2018 Max Brunsfeld"
+SPDX-License-Identifier = "MIT"

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "cflat",
+      "camelcase": "Cflat",
+      "title": "C♭",
+      "scope": "source.cflat",
+      "path": ".",
+      "file-types": [
+        "cb"
+      ],
+      "highlights": [
+        "queries/highlights.scm"
+      ],
+      "injection-regex": "^(cflat|c-flat|cb)$",
+      "locals": [
+        "queries/locals.scm"
+      ],
+      "tags": [
+        "queries/tags.scm"
+      ]
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "GPL-3.0-or-later",
+    "description": "C♭ grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "Yiyu Zhou",
+        "email": "yzhou155@dons.usfca.edu"
+      }
+    ]
+  },
+  "bindings": {
+    "c": false,
+    "go": false,
+    "java": false,
+    "node": false,
+    "python": false,
+    "rust": true,
+    "swift": false,
+    "zig": false
+  }
+}

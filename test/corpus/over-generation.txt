@@ -1,0 +1,155 @@
+================================================================================
+An expression statement need not be a function call
+================================================================================
+
+fn f() -> int {
+  x;
+  1 + 2;
+  nil;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (expression_statement
+        (identifier))
+      (expression_statement
+        (binary_expression
+          (number)
+          (number)))
+      (expression_statement
+        (nil)))))
+
+================================================================================
+An assignment left-hand side need not be a place
+================================================================================
+
+fn f() -> int {
+  x + y = 17;
+  17 = x;
+  foo() = 1;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (binary_expression
+          (identifier)
+          (identifier))
+        (number))
+      (assignment
+        (number)
+        (identifier))
+      (assignment
+        (call_expression
+          (identifier)
+          (argument_list))
+        (number)))))
+
+================================================================================
+Duplicate top-level names
+================================================================================
+
+fn f() -> int {}
+fn f() -> int {}
+struct f {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body))
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body))
+  (struct_declaration
+    (identifier)
+    (field_declaration_list)))
+
+================================================================================
+Duplicate field, parameter and local names
+================================================================================
+
+struct S {
+  x: int,
+  x: &Point
+}
+
+fn g(y: int, y: int) -> int {
+  let z: int, z: &Point;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (struct_declaration
+    (identifier)
+    (field_declaration_list
+      (declaration
+        (identifier)
+        (primitive_type))
+      (declaration
+        (identifier)
+        (pointer_type
+          (struct_type
+            (identifier))))))
+  (function_definition
+    (identifier)
+    (parameter_list
+      (declaration
+        (identifier)
+        (primitive_type))
+      (declaration
+        (identifier)
+        (primitive_type)))
+    (primitive_type)
+    (function_body
+      (let_declaration
+        (declaration
+          (identifier)
+          (primitive_type))
+        (declaration
+          (identifier)
+          (pointer_type
+            (struct_type
+              (identifier))))))))
+
+================================================================================
+Unknown type names are ordinary struct types to the grammar
+================================================================================
+
+fn f(b: bool, s: string) -> undefined_type {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list
+      (declaration
+        (identifier)
+        (struct_type
+          (identifier)))
+      (declaration
+        (identifier)
+        (struct_type
+          (identifier))))
+    (struct_type
+      (identifier))
+    (function_body)))

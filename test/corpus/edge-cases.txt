@@ -1,0 +1,757 @@
+================================================================================
+Identifiers that begin with a keyword
+================================================================================
+
+fn newton(iffy: int, letter: int) -> int {
+  let structure: int, returnable: int, orange: int, android: int;
+  structure = iffy;
+  returnable = letter;
+  orange = newton(structure, returnable);
+  android = notable;
+  return orange;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list
+      (declaration
+        (identifier)
+        (primitive_type))
+      (declaration
+        (identifier)
+        (primitive_type)))
+    (primitive_type)
+    (function_body
+      (let_declaration
+        (declaration
+          (identifier)
+          (primitive_type))
+        (declaration
+          (identifier)
+          (primitive_type))
+        (declaration
+          (identifier)
+          (primitive_type))
+        (declaration
+          (identifier)
+          (primitive_type)))
+      (assignment
+        (identifier)
+        (identifier))
+      (assignment
+        (identifier)
+        (identifier))
+      (assignment
+        (identifier)
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)
+            (identifier))))
+      (assignment
+        (identifier)
+        (identifier))
+      (return_statement
+        (identifier)))))
+
+================================================================================
+Identifiers that are exactly a keyword plus one character
+================================================================================
+
+fn fna() -> int {
+  let ifs: int, elses: int, news: int, nils: int, ands: int, ors: int, nots: int;
+  return ifs;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (let_declaration
+        (declaration
+          (identifier)
+          (primitive_type))
+        (declaration
+          (identifier)
+          (primitive_type))
+        (declaration
+          (identifier)
+          (primitive_type))
+        (declaration
+          (identifier)
+          (primitive_type))
+        (declaration
+          (identifier)
+          (primitive_type))
+        (declaration
+          (identifier)
+          (primitive_type))
+        (declaration
+          (identifier)
+          (primitive_type)))
+      (return_statement
+        (identifier)))))
+
+================================================================================
+Single-character and digit-and-underscore identifiers
+================================================================================
+
+fn a() -> int {
+  let b: int, c0: int, d_: int, e_1_f: int, Z9_: int;
+  return b;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (let_declaration
+        (declaration
+          (identifier)
+          (primitive_type))
+        (declaration
+          (identifier)
+          (primitive_type))
+        (declaration
+          (identifier)
+          (primitive_type))
+        (declaration
+          (identifier)
+          (primitive_type))
+        (declaration
+          (identifier)
+          (primitive_type)))
+      (return_statement
+        (identifier)))))
+
+================================================================================
+Numbers, including leading zeros and long literals
+================================================================================
+
+fn f() -> int {
+  let x: int;
+  x = 0;
+  x = 007;
+  x = 1234567890;
+  x = 00000000000000000000;
+  return x;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (let_declaration
+        (declaration
+          (identifier)
+          (primitive_type)))
+      (assignment
+        (identifier)
+        (number))
+      (assignment
+        (identifier)
+        (number))
+      (assignment
+        (identifier)
+        (number))
+      (assignment
+        (identifier)
+        (number))
+      (return_statement
+        (identifier)))))
+
+================================================================================
+Deeply nested parentheses
+================================================================================
+
+fn f() -> int {
+  return ((((((((((1))))))))));
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (return_statement
+        (parenthesized_expression
+          (parenthesized_expression
+            (parenthesized_expression
+              (parenthesized_expression
+                (parenthesized_expression
+                  (parenthesized_expression
+                    (parenthesized_expression
+                      (parenthesized_expression
+                        (parenthesized_expression
+                          (parenthesized_expression
+                            (number)))))))))))))))
+
+================================================================================
+Long left-associative operator chain
+================================================================================
+
+fn f() -> int {
+  return a - b - c - d - e - g - h - i - j - k;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (return_statement
+        (binary_expression
+          (binary_expression
+            (binary_expression
+              (binary_expression
+                (binary_expression
+                  (binary_expression
+                    (binary_expression
+                      (binary_expression
+                        (binary_expression
+                          (identifier)
+                          (identifier))
+                        (identifier))
+                      (identifier))
+                    (identifier))
+                  (identifier))
+                (identifier))
+              (identifier))
+            (identifier))
+          (identifier))))))
+
+================================================================================
+Long right-associative logical chain
+================================================================================
+
+fn f() -> int {
+  return a and b or c and d or e and g;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (return_statement
+        (binary_expression
+          (identifier)
+          (binary_expression
+            (identifier)
+            (binary_expression
+              (identifier)
+              (binary_expression
+                (identifier)
+                (binary_expression
+                  (identifier)
+                  (identifier))))))))))
+
+================================================================================
+Long postfix chain
+================================================================================
+
+fn f() -> int {
+  return a.b.c.d[0][1][2].*.*(x)(y).e;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (return_statement
+        (field_access
+          (call_expression
+            (call_expression
+              (pointer_access
+                (pointer_access
+                  (index_expression
+                    (index_expression
+                      (index_expression
+                        (field_access
+                          (field_access
+                            (field_access
+                              (identifier)
+                              (identifier))
+                            (identifier))
+                          (identifier))
+                        (number))
+                      (number))
+                    (number))))
+              (argument_list
+                (identifier)))
+            (argument_list
+              (identifier)))
+          (identifier))))))
+
+================================================================================
+Repeated pointer dereference
+================================================================================
+
+fn f() -> int {
+  p.*.*.* = 1;
+  return p.*.*;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (pointer_access
+          (pointer_access
+            (pointer_access
+              (identifier))))
+        (number))
+      (return_statement
+        (pointer_access
+          (pointer_access
+            (identifier)))))))
+
+================================================================================
+Unary stacked onto postfix
+================================================================================
+
+fn f() -> int {
+  return not not - - a.b[0].*(c);
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (return_statement
+        (unary_expression
+          (unary_expression
+            (unary_expression
+              (unary_expression
+                (call_expression
+                  (pointer_access
+                    (index_expression
+                      (field_access
+                        (identifier)
+                        (identifier))
+                      (number)))
+                  (argument_list
+                    (identifier)))))))))))
+
+================================================================================
+Function type returning a function type
+================================================================================
+
+fn f(g: () -> () -> () -> int) -> () -> () -> int {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list
+      (declaration
+        (identifier)
+        (function_type
+          (type_parameter_list)
+          (function_type
+            (type_parameter_list)
+            (function_type
+              (type_parameter_list)
+              (primitive_type))))))
+    (function_type
+      (type_parameter_list)
+      (function_type
+        (type_parameter_list)
+        (primitive_type)))
+    (function_body)))
+
+================================================================================
+Nested array allocations
+================================================================================
+
+fn f() -> int {
+  a = [[[int]]; [[int]; 1][0][0]];
+  return 0;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (array_allocation
+          (array_type
+            (array_type
+              (primitive_type)))
+          (index_expression
+            (index_expression
+              (array_allocation
+                (array_type
+                  (primitive_type))
+                (number))
+              (number))
+            (number))))
+      (return_statement
+        (number)))))
+
+================================================================================
+Allocation of every type form
+================================================================================
+
+fn f() -> int {
+  a = new int;
+  a = new Point;
+  a = new &int;
+  a = new [int];
+  a = new () -> int;
+  a = new (int, &Point) -> [int];
+  return 0;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (allocation
+          (primitive_type)))
+      (assignment
+        (identifier)
+        (allocation
+          (struct_type
+            (identifier))))
+      (assignment
+        (identifier)
+        (allocation
+          (pointer_type
+            (primitive_type))))
+      (assignment
+        (identifier)
+        (allocation
+          (array_type
+            (primitive_type))))
+      (assignment
+        (identifier)
+        (allocation
+          (function_type
+            (type_parameter_list)
+            (primitive_type))))
+      (assignment
+        (identifier)
+        (allocation
+          (function_type
+            (type_parameter_list
+              (primitive_type)
+              (pointer_type
+                (struct_type
+                  (identifier))))
+            (array_type
+              (primitive_type)))))
+      (return_statement
+        (number)))))
+
+================================================================================
+nil used as an ordinary expression
+================================================================================
+
+fn f() -> int {
+  a = nil;
+  a = nil.*;
+  a = nil[0];
+  a = nil.field;
+  a = nil(1, 2);
+  a = nil == nil ? nil : nil;
+  return 0;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (nil))
+      (assignment
+        (identifier)
+        (pointer_access
+          (nil)))
+      (assignment
+        (identifier)
+        (index_expression
+          (nil)
+          (number)))
+      (assignment
+        (identifier)
+        (field_access
+          (nil)
+          (identifier)))
+      (assignment
+        (identifier)
+        (call_expression
+          (nil)
+          (argument_list
+            (number)
+            (number))))
+      (assignment
+        (identifier)
+        (ternary_expression
+          (binary_expression
+            (nil)
+            (nil))
+          (nil)
+          (nil)))
+      (return_statement
+        (number)))))
+
+================================================================================
+Calls nested in argument position
+================================================================================
+
+fn f() -> int {
+  a(b(c(d(), e()), g()), h());
+  return 0;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (expression_statement
+        (call_expression
+          (identifier)
+          (argument_list
+            (call_expression
+              (identifier)
+              (argument_list
+                (call_expression
+                  (identifier)
+                  (argument_list
+                    (call_expression
+                      (identifier)
+                      (argument_list))
+                    (call_expression
+                      (identifier)
+                      (argument_list))))
+                (call_expression
+                  (identifier)
+                  (argument_list))))
+            (call_expression
+              (identifier)
+              (argument_list)))))
+      (return_statement
+        (number)))))
+
+================================================================================
+Every statement kind inside a deeply nested block
+================================================================================
+
+fn f() -> int {
+  while a {
+    if b {
+      while c {
+        if d {
+          break;
+        } else {
+          continue;
+        }
+        g();
+        x = 1;
+      }
+    } else {
+      return 0;
+    }
+  }
+  return 1;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (while_statement
+        (identifier)
+        (block
+          (if_statement
+            (identifier)
+            (block
+              (while_statement
+                (identifier)
+                (block
+                  (if_statement
+                    (identifier)
+                    (block
+                      (break_statement))
+                    (block
+                      (continue_statement)))
+                  (expression_statement
+                    (call_expression
+                      (identifier)
+                      (argument_list)))
+                  (assignment
+                    (identifier)
+                    (number)))))
+            (block
+              (return_statement
+                (number))))))
+      (return_statement
+        (number)))))
+
+================================================================================
+A ternary in every operand position
+================================================================================
+
+fn f() -> int {
+  a = (b ? c : d) ? (e ? g : h) : (i ? j : k);
+  return 0;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (ternary_expression
+          (parenthesized_expression
+            (ternary_expression
+              (identifier)
+              (identifier)
+              (identifier)))
+          (parenthesized_expression
+            (ternary_expression
+              (identifier)
+              (identifier)
+              (identifier)))
+          (parenthesized_expression
+            (ternary_expression
+              (identifier)
+              (identifier)
+              (identifier)))))
+      (return_statement
+        (number)))))
+
+================================================================================
+Whitespace variations
+================================================================================
+
+fn	f(	a	:	int	)	->	int	{
+	return
+	a
+	+
+	1
+	;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list
+      (declaration
+        (identifier)
+        (primitive_type)))
+    (primitive_type)
+    (function_body
+      (return_statement
+        (binary_expression
+          (identifier)
+          (number))))))
+
+================================================================================
+Everything on one line
+================================================================================
+
+struct P{x:int}extern e:(int)->int;fn f(a:int)->int{let b:int;b=a;return b;}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (struct_declaration
+    (identifier)
+    (field_declaration_list
+      (declaration
+        (identifier)
+        (primitive_type))))
+  (extern_declaration
+    (identifier)
+    (function_type
+      (type_parameter_list
+        (primitive_type))
+      (primitive_type)))
+  (function_definition
+    (identifier)
+    (parameter_list
+      (declaration
+        (identifier)
+        (primitive_type)))
+    (primitive_type)
+    (function_body
+      (let_declaration
+        (declaration
+          (identifier)
+          (primitive_type)))
+      (assignment
+        (identifier)
+        (identifier))
+      (return_statement
+        (identifier)))))

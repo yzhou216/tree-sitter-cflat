@@ -1,0 +1,846 @@
+================================================================================
+Primary expressions
+================================================================================
+
+fn f() -> int {
+  x = y;
+  x = 17;
+  x = nil;
+  x = (y);
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (identifier))
+      (assignment
+        (identifier)
+        (number))
+      (assignment
+        (identifier)
+        (nil))
+      (assignment
+        (identifier)
+        (parenthesized_expression
+          (identifier))))))
+
+================================================================================
+Unary operators
+================================================================================
+
+fn f() -> int {
+  x = -y;
+  x = not y;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (unary_expression
+          (identifier)))
+      (assignment
+        (identifier)
+        (unary_expression
+          (identifier))))))
+
+================================================================================
+Unary operators are right-associative
+================================================================================
+
+fn f() -> int {
+  x = - - -y;
+  x = not not y;
+  x = not -y;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (unary_expression
+          (unary_expression
+            (unary_expression
+              (identifier)))))
+      (assignment
+        (identifier)
+        (unary_expression
+          (unary_expression
+            (identifier))))
+      (assignment
+        (identifier)
+        (unary_expression
+          (unary_expression
+            (identifier)))))))
+
+================================================================================
+All binary operators
+================================================================================
+
+fn f() -> int {
+  a = b + c;
+  a = b - c;
+  a = b * c;
+  a = b / c;
+  a = b == c;
+  a = b != c;
+  a = b < c;
+  a = b <= c;
+  a = b > c;
+  a = b >= c;
+  a = b and c;
+  a = b or c;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (binary_expression
+          (identifier)
+          (identifier)))
+      (assignment
+        (identifier)
+        (binary_expression
+          (identifier)
+          (identifier)))
+      (assignment
+        (identifier)
+        (binary_expression
+          (identifier)
+          (identifier)))
+      (assignment
+        (identifier)
+        (binary_expression
+          (identifier)
+          (identifier)))
+      (assignment
+        (identifier)
+        (binary_expression
+          (identifier)
+          (identifier)))
+      (assignment
+        (identifier)
+        (binary_expression
+          (identifier)
+          (identifier)))
+      (assignment
+        (identifier)
+        (binary_expression
+          (identifier)
+          (identifier)))
+      (assignment
+        (identifier)
+        (binary_expression
+          (identifier)
+          (identifier)))
+      (assignment
+        (identifier)
+        (binary_expression
+          (identifier)
+          (identifier)))
+      (assignment
+        (identifier)
+        (binary_expression
+          (identifier)
+          (identifier)))
+      (assignment
+        (identifier)
+        (binary_expression
+          (identifier)
+          (identifier)))
+      (assignment
+        (identifier)
+        (binary_expression
+          (identifier)
+          (identifier))))))
+
+================================================================================
+Arithmetic is left-associative
+================================================================================
+
+fn f() -> int {
+  a = b - c - d;
+  a = b / c / d;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier)))
+      (assignment
+        (identifier)
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+================================================================================
+Relational operators are left-associative
+================================================================================
+
+fn f() -> int {
+  a = b < c < d;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+================================================================================
+and and or are right-associative and share one precedence level
+================================================================================
+
+fn f() -> int {
+  a = b and c and d;
+  a = b or c or d;
+  a = b and c or d;
+  a = b or c and d;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (binary_expression
+          (identifier)
+          (binary_expression
+            (identifier)
+            (identifier))))
+      (assignment
+        (identifier)
+        (binary_expression
+          (identifier)
+          (binary_expression
+            (identifier)
+            (identifier))))
+      (assignment
+        (identifier)
+        (binary_expression
+          (identifier)
+          (binary_expression
+            (identifier)
+            (identifier))))
+      (assignment
+        (identifier)
+        (binary_expression
+          (identifier)
+          (binary_expression
+            (identifier)
+            (identifier)))))))
+
+================================================================================
+Multiplicative binds tighter than additive
+================================================================================
+
+fn f() -> int {
+  a = b + c * d - e / g;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (binary_expression
+              (identifier)
+              (identifier)))
+          (binary_expression
+            (identifier)
+            (identifier)))))))
+
+================================================================================
+Additive binds tighter than relational, relational tighter than logical
+================================================================================
+
+fn f() -> int {
+  a = b + c < d * e and g - h == i;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (binary_expression
+          (binary_expression
+            (binary_expression
+              (identifier)
+              (identifier))
+            (binary_expression
+              (identifier)
+              (identifier)))
+          (binary_expression
+            (binary_expression
+              (identifier)
+              (identifier))
+            (identifier)))))))
+
+================================================================================
+Unary binds tighter than any binary operator
+================================================================================
+
+fn f() -> int {
+  a = not b >= c;
+  a = -b * c;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (binary_expression
+          (unary_expression
+            (identifier))
+          (identifier)))
+      (assignment
+        (identifier)
+        (binary_expression
+          (unary_expression
+            (identifier))
+          (identifier))))))
+
+================================================================================
+The ternary operator is LEFT-associative, unlike C
+================================================================================
+
+fn f() -> int {
+  a = b ? c : d ? e : g;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (ternary_expression
+          (ternary_expression
+            (identifier)
+            (identifier)
+            (identifier))
+          (identifier)
+          (identifier))))))
+
+================================================================================
+Chained ternaries nest on the left
+================================================================================
+
+fn f() -> int {
+  a = b ? c : d ? e : g ? h : i;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (ternary_expression
+          (ternary_expression
+            (ternary_expression
+              (identifier)
+              (identifier)
+              (identifier))
+            (identifier)
+            (identifier))
+          (identifier)
+          (identifier))))))
+
+================================================================================
+A ternary in the consequence position still nests in the middle
+================================================================================
+
+fn f() -> int {
+  a = b ? c ? d : e : g;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (ternary_expression
+          (identifier)
+          (ternary_expression
+            (identifier)
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+================================================================================
+The ternary is the loosest-binding operator
+================================================================================
+
+fn f() -> int {
+  a = b or c ? d + e : g * h;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (ternary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (binary_expression
+            (identifier)
+            (identifier))
+          (binary_expression
+            (identifier)
+            (identifier)))))))
+
+================================================================================
+Postfix operators
+================================================================================
+
+fn f() -> int {
+  a = b[0];
+  a = b.field;
+  a = b.*;
+  a = b();
+  a = b(c, d);
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (index_expression
+          (identifier)
+          (number)))
+      (assignment
+        (identifier)
+        (field_access
+          (identifier)
+          (identifier)))
+      (assignment
+        (identifier)
+        (pointer_access
+          (identifier)))
+      (assignment
+        (identifier)
+        (call_expression
+          (identifier)
+          (argument_list)))
+      (assignment
+        (identifier)
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)
+            (identifier)))))))
+
+================================================================================
+Postfix operators chain left to right
+================================================================================
+
+fn f() -> int {
+  a = b.c.d;
+  a = b[0][1];
+  a = b()();
+  a = b.c[0].*(d).e;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (field_access
+          (field_access
+            (identifier)
+            (identifier))
+          (identifier)))
+      (assignment
+        (identifier)
+        (index_expression
+          (index_expression
+            (identifier)
+            (number))
+          (number)))
+      (assignment
+        (identifier)
+        (call_expression
+          (call_expression
+            (identifier)
+            (argument_list))
+          (argument_list)))
+      (assignment
+        (identifier)
+        (field_access
+          (call_expression
+            (pointer_access
+              (index_expression
+                (field_access
+                  (identifier)
+                  (identifier))
+                (number)))
+            (argument_list
+              (identifier)))
+          (identifier))))))
+
+================================================================================
+Postfix binds tighter than unary
+================================================================================
+
+fn f() -> int {
+  a = -b.c;
+  a = not b[0];
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (unary_expression
+          (field_access
+            (identifier)
+            (identifier))))
+      (assignment
+        (identifier)
+        (unary_expression
+          (index_expression
+            (identifier)
+            (number)))))))
+
+================================================================================
+Singleton allocation is an ordinary primary expression
+================================================================================
+
+fn f() -> int {
+  a = new Point;
+  a = new int;
+  a = new &[Point];
+  a = new (int) -> int;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (allocation
+          (struct_type
+            (identifier))))
+      (assignment
+        (identifier)
+        (allocation
+          (primitive_type)))
+      (assignment
+        (identifier)
+        (allocation
+          (pointer_type
+            (array_type
+              (struct_type
+                (identifier))))))
+      (assignment
+        (identifier)
+        (allocation
+          (function_type
+            (type_parameter_list
+              (primitive_type))
+            (primitive_type)))))))
+
+================================================================================
+Allocation composes with postfix and binary operators
+================================================================================
+
+fn f() -> int {
+  a = new Point.x;
+  a = new int + 1;
+  foo(new Point);
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (field_access
+          (allocation
+            (struct_type
+              (identifier)))
+          (identifier)))
+      (assignment
+        (identifier)
+        (binary_expression
+          (allocation
+            (primitive_type))
+          (number)))
+      (expression_statement
+        (call_expression
+          (identifier)
+          (argument_list
+            (allocation
+              (struct_type
+                (identifier)))))))))
+
+================================================================================
+Array allocation
+================================================================================
+
+fn f() -> int {
+  a = [int; 10];
+  a = [&Point; n + 1];
+  a = [[int]; 2];
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (array_allocation
+          (primitive_type)
+          (number)))
+      (assignment
+        (identifier)
+        (array_allocation
+          (pointer_type
+            (struct_type
+              (identifier)))
+          (binary_expression
+            (identifier)
+            (number))))
+      (assignment
+        (identifier)
+        (array_allocation
+          (array_type
+            (primitive_type))
+          (number))))))
+
+================================================================================
+Array allocation is distinct from indexing
+================================================================================
+
+fn f() -> int {
+  a = [int; 10][0];
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (index_expression
+          (array_allocation
+            (primitive_type)
+            (number))
+          (number))))))
+
+================================================================================
+Grouping overrides precedence
+================================================================================
+
+fn f() -> int {
+  a = (b + c) * d;
+  a = (b ? c : d) ? e : g;
+  a = b ? c : (d ? e : g);
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (binary_expression
+          (parenthesized_expression
+            (binary_expression
+              (identifier)
+              (identifier)))
+          (identifier)))
+      (assignment
+        (identifier)
+        (ternary_expression
+          (parenthesized_expression
+            (ternary_expression
+              (identifier)
+              (identifier)
+              (identifier)))
+          (identifier)
+          (identifier)))
+      (assignment
+        (identifier)
+        (ternary_expression
+          (identifier)
+          (identifier)
+          (parenthesized_expression
+            (ternary_expression
+              (identifier)
+              (identifier)
+              (identifier))))))))
+
+================================================================================
+Call arguments are full expressions
+================================================================================
+
+fn f() -> int {
+  foo(a ? b : c, not d, e[0].f, new Point, [int; 3]);
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (expression_statement
+        (call_expression
+          (identifier)
+          (argument_list
+            (ternary_expression
+              (identifier)
+              (identifier)
+              (identifier))
+            (unary_expression
+              (identifier))
+            (field_access
+              (index_expression
+                (identifier)
+                (number))
+              (identifier))
+            (allocation
+              (struct_type
+                (identifier)))
+            (array_allocation
+              (primitive_type)
+              (number))))))))

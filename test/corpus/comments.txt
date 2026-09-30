@@ -1,0 +1,218 @@
+================================================================================
+Line comment
+================================================================================
+
+// a line comment
+fn f() -> int {
+  // another one
+  return 0; // trailing
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (comment)
+      (return_statement
+        (number))
+      (comment))))
+
+================================================================================
+Single-line block comment
+================================================================================
+
+/* a block comment that stays on one line */
+fn f() -> int {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body)))
+
+================================================================================
+Multi-line block comment
+================================================================================
+
+/* a block comment
+   that spans
+   several lines */
+fn f() -> int {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body)))
+
+================================================================================
+Block comments are non-greedy - each stops at its own first star-slash
+================================================================================
+
+/* one */ fn f() -> int { /* two */ return /* three */ 0; } /* four */
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (comment)
+      (return_statement
+        (comment)
+        (number))))
+  (comment))
+
+================================================================================
+Block comment containing stars that do not close it
+================================================================================
+
+/* a * b ** c * / d */
+fn f() -> int {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body)))
+
+================================================================================
+Empty and star-only block comments
+================================================================================
+
+/**/
+/***/
+/****/
+fn f() -> int {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (comment)
+  (comment)
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body)))
+
+================================================================================
+A slash right after the opener does not close the comment
+================================================================================
+
+/*/ still open */
+fn f() -> int {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body)))
+
+================================================================================
+Block comment containing a line comment and vice versa
+================================================================================
+
+/* // not a line comment */
+// /* not a block comment */
+fn f() -> int {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (comment)
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body)))
+
+================================================================================
+Comments appear anywhere whitespace may
+================================================================================
+
+fn /* here */ f(/* and */ x /* here */ : /* too */ int) -> int {
+  return x /* mid-expression */ + 1;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (comment)
+    (identifier)
+    (parameter_list
+      (comment)
+      (declaration
+        (identifier)
+        (comment)
+        (comment)
+        (primitive_type)))
+    (primitive_type)
+    (function_body
+      (return_statement
+        (binary_expression
+          (identifier)
+          (comment)
+          (number))))))
+
+================================================================================
+Unterminated block comment runs to end of input
+================================================================================
+
+fn f() -> int {}
+/* this comment is never closed * / so it runs to EOF
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body))
+  (unterminated_comment))
+
+================================================================================
+Unterminated block comment swallows the rest of the program
+================================================================================
+
+fn f() -> int {}
+/* unterminated
+fn g() -> int {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body))
+  (unterminated_comment))

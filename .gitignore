@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: 2026 Yiyu Zhou <yzhou155@dons.usfca.edu>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+/target/
+/node_modules/
+/result
+/result-*
+
+# Built grammars
+*.wasm
+*.so
+*.dylib
+*.dll
+
+*.elc
+/emacs/.grammar/
+/emacs/.stress/

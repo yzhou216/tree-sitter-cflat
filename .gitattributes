@@ -1,0 +1,11 @@
+# SPDX-FileCopyrightText: 2026 Yiyu Zhou <yzhou155@dons.usfca.edu>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+* text=auto eol=lf
+
+# Output of `tree-sitter generate`, never edited by hand
+src/*.json linguist-generated
+src/parser.c linguist-generated
+src/tree_sitter/* linguist-generated
+
+Cargo.lock linguist-generated
