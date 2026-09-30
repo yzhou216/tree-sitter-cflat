@@ -1,0 +1,60 @@
+# SPDX-FileCopyrightText: 2026 Yiyu Zhou <yzhou155@dons.usfca.edu>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: nix flake check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - uses: cachix/install-nix-action@v31.11.1
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      # `--all-systems` also evaluates the platforms CI does not build on,
+      # which is what catches a Darwin-only evaluation error.
+      - run: nix flake check --all-systems --print-build-logs
+
+  # Master leaves out the generated parser that editors build from, so the
+  # release branch carries it as one commit on top of master.
+  release:
+    name: publish the release branch
+    needs: check
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - uses: cachix/install-nix-action@v31.11.1
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - run: nix build .#source
+
+      # Staging the built tree as is commits exactly what the checks ran on
+      - run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git --work-tree=result add --all --force
+          git commit --quiet --message 'src: add the generated parser'
+          git push --force origin HEAD:refs/heads/release
