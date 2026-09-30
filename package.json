@@ -1,0 +1,15 @@
+{
+  "name": "tree-sitter-cflat",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "tree-sitter-cli": "^0.26.11"
+  },
+  "scripts": {
+    "generate": "tree-sitter generate",
+    "test": "tree-sitter test",
+    "prestart": "tree-sitter build --wasm",
+    "start": "tree-sitter playground"
+  }
+}

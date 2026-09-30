@@ -1,0 +1,27 @@
+# SPDX-FileCopyrightText: 2026 Yiyu Zhou <yzhou155@dons.usfca.edu>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{c,cb,el,h,js,json,nix,scm,toml,yml}]
+indent_style = space
+indent_size = 2
+
+[*.rs]
+indent_style = space
+indent_size = 4
+
+[Makefile]
+indent_style = tab
+indent_size = 8
+
+# The tree-sitter CLI writes these without a final newline on every
+# `tree-sitter generate`, so adding one would only be undone.
+[src/{grammar,node-types}.json]
+insert_final_newline = false

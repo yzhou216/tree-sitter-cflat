@@ -1,0 +1,192 @@
+================================================================================
+Primitive and struct types
+================================================================================
+
+fn f(a: int, b: Point) -> int {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list
+      (declaration
+        (identifier)
+        (primitive_type))
+      (declaration
+        (identifier)
+        (struct_type
+          (identifier))))
+    (primitive_type)
+    (function_body)))
+
+================================================================================
+Pointer and array types
+================================================================================
+
+fn f(a: &int, b: [int], c: &[int], d: [&Point]) -> &[&int] {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list
+      (declaration
+        (identifier)
+        (pointer_type
+          (primitive_type)))
+      (declaration
+        (identifier)
+        (array_type
+          (primitive_type)))
+      (declaration
+        (identifier)
+        (pointer_type
+          (array_type
+            (primitive_type))))
+      (declaration
+        (identifier)
+        (array_type
+          (pointer_type
+            (struct_type
+              (identifier))))))
+    (pointer_type
+      (array_type
+        (pointer_type
+          (primitive_type))))
+    (function_body)))
+
+================================================================================
+Deeply nested pointer and array types
+================================================================================
+
+fn f(a: &&&int, b: [[[int]]], c: [&[&Point]]) -> [&[int]] {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list
+      (declaration
+        (identifier)
+        (pointer_type
+          (pointer_type
+            (pointer_type
+              (primitive_type)))))
+      (declaration
+        (identifier)
+        (array_type
+          (array_type
+            (array_type
+              (primitive_type)))))
+      (declaration
+        (identifier)
+        (array_type
+          (pointer_type
+            (array_type
+              (pointer_type
+                (struct_type
+                  (identifier))))))))
+    (array_type
+      (pointer_type
+        (array_type
+          (primitive_type))))
+    (function_body)))
+
+================================================================================
+Function types as parameters and return types
+================================================================================
+
+fn f(g: () -> int, h: (int, &Point) -> [int]) -> (int) -> int {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list
+      (declaration
+        (identifier)
+        (function_type
+          (type_parameter_list)
+          (primitive_type)))
+      (declaration
+        (identifier)
+        (function_type
+          (type_parameter_list
+            (primitive_type)
+            (pointer_type
+              (struct_type
+                (identifier))))
+          (array_type
+            (primitive_type)))))
+    (function_type
+      (type_parameter_list
+        (primitive_type))
+      (primitive_type))
+    (function_body)))
+
+================================================================================
+Function type from the reference example
+================================================================================
+
+fn f(x: ([&foo], (int) -> foo) -> int) -> int {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list
+      (declaration
+        (identifier)
+        (function_type
+          (type_parameter_list
+            (array_type
+              (pointer_type
+                (struct_type
+                  (identifier))))
+            (function_type
+              (type_parameter_list
+                (primitive_type))
+              (struct_type
+                (identifier))))
+          (primitive_type))))
+    (primitive_type)
+    (function_body)))
+
+================================================================================
+Function types as locals
+================================================================================
+
+fn f() -> int {
+  let cb: (int) -> int, table: [(int, int) -> &Point];
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (let_declaration
+        (declaration
+          (identifier)
+          (function_type
+            (type_parameter_list
+              (primitive_type))
+            (primitive_type)))
+        (declaration
+          (identifier)
+          (array_type
+            (function_type
+              (type_parameter_list
+                (primitive_type)
+                (primitive_type))
+              (pointer_type
+                (struct_type
+                  (identifier))))))))))

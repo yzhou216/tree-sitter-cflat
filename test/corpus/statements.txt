@@ -1,0 +1,287 @@
+================================================================================
+Expression statement
+================================================================================
+
+fn f() -> int {
+  foo();
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (expression_statement
+        (call_expression
+          (identifier)
+          (argument_list))))))
+
+================================================================================
+Assignment
+================================================================================
+
+fn f() -> int {
+  x = 3 + 5;
+  p.* = 3;
+  a[i] = 3;
+  s.field = 3;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (assignment
+        (identifier)
+        (binary_expression
+          (number)
+          (number)))
+      (assignment
+        (pointer_access
+          (identifier))
+        (number))
+      (assignment
+        (index_expression
+          (identifier)
+          (identifier))
+        (number))
+      (assignment
+        (field_access
+          (identifier)
+          (identifier))
+        (number)))))
+
+================================================================================
+If statement without else
+================================================================================
+
+fn f() -> int {
+  if x > y { x = 0; }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (if_statement
+        (binary_expression
+          (identifier)
+          (identifier))
+        (block
+          (assignment
+            (identifier)
+            (number)))))))
+
+================================================================================
+If statement with else
+================================================================================
+
+fn f() -> int {
+  if x > y { x = 0; } else { y = 0; }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (if_statement
+        (binary_expression
+          (identifier)
+          (identifier))
+        (block
+          (assignment
+            (identifier)
+            (number)))
+        (block
+          (assignment
+            (identifier)
+            (number)))))))
+
+================================================================================
+Nested if inside else - blocks are mandatory, so there is no dangling else
+================================================================================
+
+fn f() -> int {
+  if a { x = 0; } else { if b { x = 1; } else { x = 2; } }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (if_statement
+        (identifier)
+        (block
+          (assignment
+            (identifier)
+            (number)))
+        (block
+          (if_statement
+            (identifier)
+            (block
+              (assignment
+                (identifier)
+                (number)))
+            (block
+              (assignment
+                (identifier)
+                (number)))))))))
+
+================================================================================
+While loop
+================================================================================
+
+fn f() -> int {
+  while x > 0 { x = x - 1; }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (while_statement
+        (binary_expression
+          (identifier)
+          (number))
+        (block
+          (assignment
+            (identifier)
+            (binary_expression
+              (identifier)
+              (number))))))))
+
+================================================================================
+Break and continue
+================================================================================
+
+fn f() -> int {
+  while x { break; continue; }
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (while_statement
+        (identifier)
+        (block
+          (break_statement)
+          (continue_statement))))))
+
+================================================================================
+Return
+================================================================================
+
+fn f() -> int {
+  return 0;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (return_statement
+        (number)))))
+
+================================================================================
+Empty block
+================================================================================
+
+fn f() -> int {
+  if x {}
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (if_statement
+        (identifier)
+        (block)))))
+
+================================================================================
+Blocks contain statements but no let declarations
+================================================================================
+
+fn f() -> int {
+  let x: int;
+  while x > 0 {
+    if x == 1 { x = 0; } else { x = x - 1; }
+    foo(x);
+  }
+  return x;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (let_declaration
+        (declaration
+          (identifier)
+          (primitive_type)))
+      (while_statement
+        (binary_expression
+          (identifier)
+          (number))
+        (block
+          (if_statement
+            (binary_expression
+              (identifier)
+              (number))
+            (block
+              (assignment
+                (identifier)
+                (number)))
+            (block
+              (assignment
+                (identifier)
+                (binary_expression
+                  (identifier)
+                  (number)))))
+          (expression_statement
+            (call_expression
+              (identifier)
+              (argument_list
+                (identifier))))))
+      (return_statement
+        (identifier)))))

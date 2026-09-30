@@ -1,0 +1,221 @@
+================================================================================
+Struct declaration
+================================================================================
+
+struct Point {
+  x: int,
+  y: int,
+  parent: &Point
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (struct_declaration
+    (identifier)
+    (field_declaration_list
+      (declaration
+        (identifier)
+        (primitive_type))
+      (declaration
+        (identifier)
+        (primitive_type))
+      (declaration
+        (identifier)
+        (pointer_type
+          (struct_type
+            (identifier)))))))
+
+================================================================================
+Struct with nested pointer and array field types
+================================================================================
+
+struct Pair {
+  first: int,
+  second: [&[int]],
+  callback: (int, &Pair) -> [&int]
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (struct_declaration
+    (identifier)
+    (field_declaration_list
+      (declaration
+        (identifier)
+        (primitive_type))
+      (declaration
+        (identifier)
+        (array_type
+          (pointer_type
+            (array_type
+              (primitive_type)))))
+      (declaration
+        (identifier)
+        (function_type
+          (type_parameter_list
+            (primitive_type)
+            (pointer_type
+              (struct_type
+                (identifier))))
+          (array_type
+            (pointer_type
+              (primitive_type))))))))
+
+================================================================================
+Empty struct - LIST permits the empty list
+================================================================================
+
+struct Empty {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (struct_declaration
+    (identifier)
+    (field_declaration_list)))
+
+================================================================================
+Extern declaration
+================================================================================
+
+extern print_num : (int) -> int;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (extern_declaration
+    (identifier)
+    (function_type
+      (type_parameter_list
+        (primitive_type))
+      (primitive_type))))
+
+================================================================================
+Extern with an empty parameter list
+================================================================================
+
+extern now : () -> int;
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (extern_declaration
+    (identifier)
+    (function_type
+      (type_parameter_list)
+      (primitive_type))))
+
+================================================================================
+Function definition
+================================================================================
+
+fn square(x: int) -> int {
+  return x * x;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list
+      (declaration
+        (identifier)
+        (primitive_type)))
+    (primitive_type)
+    (function_body
+      (return_statement
+        (binary_expression
+          (identifier)
+          (identifier))))))
+
+================================================================================
+Function with no parameters - LIST permits the empty list
+================================================================================
+
+fn main() -> int {
+  return 0;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (return_statement
+        (number)))))
+
+================================================================================
+Empty function body
+================================================================================
+
+fn nothing() -> int {}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body)))
+
+================================================================================
+let with no declarators
+================================================================================
+
+fn f() -> int {
+  let;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (let_declaration))))
+
+================================================================================
+Multiple let declarations, each with several declarators
+================================================================================
+
+fn f() -> int {
+  let x: int, y: Point;
+  let z: &[int];
+  let;
+  return x;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (let_declaration
+        (declaration
+          (identifier)
+          (primitive_type))
+        (declaration
+          (identifier)
+          (struct_type
+            (identifier))))
+      (let_declaration
+        (declaration
+          (identifier)
+          (pointer_type
+            (array_type
+              (primitive_type)))))
+      (let_declaration)
+      (return_statement
+        (identifier)))))

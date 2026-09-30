@@ -1,0 +1,297 @@
+================================================================================
+basic.cb
+================================================================================
+
+// Point in the plane with a pointer back to its parent.
+struct Point {
+  x: int,
+  y: int,
+  parent: &Point
+}
+
+fn square(x: int) -> int {
+  return x * x;
+}
+
+extern print_num : (int) -> int;
+
+fn main() -> int {
+  let x: int, y: int;
+  x = square(5);
+  y = x * 2 + 1;
+  if x > y {
+    y = x;
+  } else {
+    y = x - 1;
+  }
+  while y > 0 {
+    y = y - 1;
+  }
+  return y;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (struct_declaration
+    (identifier)
+    (field_declaration_list
+      (declaration
+        (identifier)
+        (primitive_type))
+      (declaration
+        (identifier)
+        (primitive_type))
+      (declaration
+        (identifier)
+        (pointer_type
+          (struct_type
+            (identifier))))))
+  (function_definition
+    (identifier)
+    (parameter_list
+      (declaration
+        (identifier)
+        (primitive_type)))
+    (primitive_type)
+    (function_body
+      (return_statement
+        (binary_expression
+          (identifier)
+          (identifier)))))
+  (extern_declaration
+    (identifier)
+    (function_type
+      (type_parameter_list
+        (primitive_type))
+      (primitive_type)))
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (let_declaration
+        (declaration
+          (identifier)
+          (primitive_type))
+        (declaration
+          (identifier)
+          (primitive_type)))
+      (assignment
+        (identifier)
+        (call_expression
+          (identifier)
+          (argument_list
+            (number))))
+      (assignment
+        (identifier)
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (number))
+          (number)))
+      (if_statement
+        (binary_expression
+          (identifier)
+          (identifier))
+        (block
+          (assignment
+            (identifier)
+            (identifier)))
+        (block
+          (assignment
+            (identifier)
+            (binary_expression
+              (identifier)
+              (number)))))
+      (while_statement
+        (binary_expression
+          (identifier)
+          (number))
+        (block
+          (assignment
+            (identifier)
+            (binary_expression
+              (identifier)
+              (number)))))
+      (return_statement
+        (identifier)))))
+
+================================================================================
+comments.cb
+================================================================================
+
+// Line comments and a single-line block comment.
+/* A block comment that stays on one line */
+struct Pair {
+  first: int,
+  second: [&[int]]
+}
+
+fn pick(a: int, b: int) -> int {
+  // Function-typed variable via the funtype rule.
+  let f : (int, bool) -> int;
+  return a < b ? a : b; // ternary conditional
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (comment)
+  (struct_declaration
+    (identifier)
+    (field_declaration_list
+      (declaration
+        (identifier)
+        (primitive_type))
+      (declaration
+        (identifier)
+        (array_type
+          (pointer_type
+            (array_type
+              (primitive_type)))))))
+  (function_definition
+    (identifier)
+    (parameter_list
+      (declaration
+        (identifier)
+        (primitive_type))
+      (declaration
+        (identifier)
+        (primitive_type)))
+    (primitive_type)
+    (function_body
+      (comment)
+      (let_declaration
+        (declaration
+          (identifier)
+          (function_type
+            (type_parameter_list
+              (primitive_type)
+              (struct_type
+                (identifier)))
+            (primitive_type))))
+      (return_statement
+        (ternary_expression
+          (binary_expression
+            (identifier)
+            (identifier))
+          (identifier)
+          (identifier)))
+      (comment))))
+
+================================================================================
+operators.cb
+================================================================================
+
+// Arithmetic, relational, logical, and pointer/array operators.
+fn main() -> int {
+  let p: &Point, i: int, arr: &[int];
+  p = new Point;
+  i = p.x;             // field access
+  i = p.*;             // pointer access
+  i = arr[0];          // array access
+  arr = [int; 10];
+  p = nil;
+  i = -i + 3 * 4 / 2;
+  i = i == 0 or i != 1 and i < 2;
+  if not i >= 2 {
+    i = i <= 3 ? i : 4;
+  }
+  return i;
+}
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (comment)
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (function_body
+      (let_declaration
+        (declaration
+          (identifier)
+          (pointer_type
+            (struct_type
+              (identifier))))
+        (declaration
+          (identifier)
+          (primitive_type))
+        (declaration
+          (identifier)
+          (pointer_type
+            (array_type
+              (primitive_type)))))
+      (assignment
+        (identifier)
+        (allocation
+          (struct_type
+            (identifier))))
+      (assignment
+        (identifier)
+        (field_access
+          (identifier)
+          (identifier)))
+      (comment)
+      (assignment
+        (identifier)
+        (pointer_access
+          (identifier)))
+      (comment)
+      (assignment
+        (identifier)
+        (index_expression
+          (identifier)
+          (number)))
+      (comment)
+      (assignment
+        (identifier)
+        (array_allocation
+          (primitive_type)
+          (number)))
+      (assignment
+        (identifier)
+        (nil))
+      (assignment
+        (identifier)
+        (binary_expression
+          (unary_expression
+            (identifier))
+          (binary_expression
+            (binary_expression
+              (number)
+              (number))
+            (number))))
+      (assignment
+        (identifier)
+        (binary_expression
+          (binary_expression
+            (identifier)
+            (number))
+          (binary_expression
+            (binary_expression
+              (identifier)
+              (number))
+            (binary_expression
+              (identifier)
+              (number)))))
+      (if_statement
+        (binary_expression
+          (unary_expression
+            (identifier))
+          (number))
+        (block
+          (assignment
+            (identifier)
+            (ternary_expression
+              (binary_expression
+                (identifier)
+                (number))
+              (identifier)
+              (number)))))
+      (return_statement
+        (identifier)))))

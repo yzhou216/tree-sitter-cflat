@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: 2026 Yiyu Zhou <yzhou155@dons.usfca.edu>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+/target/
+/node_modules/
+/result
+/result-*
+
+# Output of `tree-sitter generate`, published on the release branch
+/src/grammar.json
+/src/node-types.json
+/src/parser.c
+/src/tree_sitter/
+
+# Built grammars
+*.o
+*.wasm
+*.so
+*.dylib
+*.dll
+
+*.elc
+/emacs/.grammar/
+/emacs/.stress/
