@@ -1,0 +1,26 @@
+struct Point {
+// <- keyword
+//     ^ type
+  x: int,
+//^ property
+//   ^ type.builtin
+  parent: &Point
+//^ property
+//         ^ type
+}
+
+extern print_num : (int) -> int;
+// <- keyword
+//     ^ function
+//                  ^ type.builtin
+
+fn square(x: int) -> int {
+// <- keyword
+// ^ function
+//        ^ variable.parameter
+//                   ^ type.builtin
+  return x * x;
+//^ keyword.return
+//       ^ variable
+//         ^ operator
+}

@@ -1,0 +1,27 @@
+fn main() -> int {
+  let p: &Point, i: int;
+//^ keyword
+//    ^ variable
+  p = new Point;
+//    ^ keyword.operator
+//        ^ type
+  i = p.x;
+//      ^ property
+  i = p.*;
+//      ^ operator
+  i = f(i) + 1;
+//    ^ function.call
+//         ^ operator
+//           ^ number
+  i = i == 0 or i != 1 and i < 2;
+//      ^ operator
+//           ^ keyword.operator
+//                     ^ keyword.operator
+  i = i <= 3 ? i : 4;
+//           ^ operator
+//               ^ operator
+  p = nil;
+//    ^ constant.builtin
+  return i;
+//^ keyword.return
+}

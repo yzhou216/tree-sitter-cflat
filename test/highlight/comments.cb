@@ -1,0 +1,12 @@
+// a line comment
+// <- comment
+/* a single-line block comment */
+// <- comment
+/* a block comment
+   spanning several lines */
+// <- comment
+fn f() -> int {
+// <- keyword
+  return 0; // a trailing comment
+//          ^ comment
+}
